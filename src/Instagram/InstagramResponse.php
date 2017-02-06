@@ -2,6 +2,7 @@
 
 namespace Munouni\Instagram;
 
+use Munouni\Instagram\Exception\InstagramAPIException;
 use Munouni\Instagram\HttpRequests\InstagramRequestInterface;
 
 class InstagramResponse
@@ -33,7 +34,7 @@ class InstagramResponse
      * @param InstagramRequestInterface $instagramRequest
      * @param null $body
      * @param null $httpStatusCode
-     * @param array $header
+     * @param string $header
      */
     public function __construct(InstagramRequestInterface $instagramRequest, $body = null, $httpStatusCode = null, $header = null)
     {
@@ -80,5 +81,34 @@ class InstagramResponse
     public function getHeader()
     {
         return $this->header;
+    }
+
+    /**
+     * @return bool result
+     */
+    public function isExistNextUrl()
+    {
+        if ($this->getDecodedBody() !== null && array_key_exists('pagination', $this->getDecodedBody())) {
+            $pagination = $this->getDecodedBody()['pagination'];
+            if (array_key_exists('next_url', $pagination)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return string Next url.
+     * @throws InstagramAPIException
+     */
+    public function getNextUrl()
+    {
+        if ($this->getDecodedBody() !== null && array_key_exists('pagination', $this->getDecodedBody())) {
+            $pagination = $this->getDecodedBody()['pagination'];
+            if (array_key_exists('next_url', $pagination)) {
+                return $pagination['next_url'];
+            }
+        }
+        throw new InstagramAPIException('Next url not found.');
     }
 }

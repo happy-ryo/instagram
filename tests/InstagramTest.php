@@ -1,4 +1,5 @@
 <?php
+use Mockery as m;
 use Munouni\Instagram\Instagram;
 use Munouni\Instagram\InstagramClient;
 
@@ -164,5 +165,17 @@ class InstagramTest extends PHPUnit_Framework_TestCase
         $instagram = new Instagram(['access_token' => 'chihaya']);
         $instagram->setClient(new InstagramClient(new Munouni\Instagram\Tests\HttpClients\InstagramOAuthTestHttpClients()));
         $this->assertEquals('fb2e77d.47a0479900504cb3ab4a1f626d174d2d', $instagram->getOAuthToken('chihaya', true)['access_token']);
+    }
+
+    public function testNext()
+    {
+        $instagram = new Instagram(['access_token' => 'chihaya']);
+        $instagram->setClient(new InstagramClient(new Munouni\Instagram\Tests\HttpClients\InstagramTestHttpClients()));
+
+        $nextRequestMock = m::mock(\Munouni\Instagram\InstagramResponse::class);
+        $nextRequestMock->shouldReceive('getNextUrl')->once()->andReturn('http://test.com/next');
+
+        $instagramResponse = $instagram->next($nextRequestMock);
+        $this->assertEquals($instagramResponse, $instagram->getLastResponse());
     }
 }

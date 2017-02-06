@@ -7,9 +7,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Mockery as m;
 use Munouni\Instagram\Http\InstagramRawResponse;
 use Munouni\Instagram\HttpClients\InstagramGuzzeleHttpClient;
-use Mockery as m;
 
 class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
 {
