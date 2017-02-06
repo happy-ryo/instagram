@@ -48,8 +48,18 @@ use \Munouni\Instagram\Instagram;
 $instagram = new Instagram(['access_token' => 'YOUR_ACCESS_TOKEN']);
 $response = $instagram->sendRequest('GET','/users/self');
 $response = $instagram->sendRequest('GET','/tags/{tag-name}/', ['{tag-name}' => 'ミンゴス']);
+$response = $instagram->sendRequest('GET','/tags/search',['q' => 'ミンゴス']);
 ```
 
+### Pagination
+
+```
+<?php
+use \Munouni\Instagram\Instagram;
+$instagram = new Instagram(['access_token' => 'YOUR_ACCESS_TOKEN']);
+$response = $instagram->sendRequest('GET','/tags/{tag-name}/media/recent',['{tag-name}' => 'ミンゴス']);
+$nextResponse = $instagram->next($response);
+```
 
 ## License
 

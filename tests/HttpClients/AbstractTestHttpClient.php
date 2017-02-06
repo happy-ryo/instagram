@@ -9,6 +9,31 @@ class AbstractTestHttpClient extends \PHPUnit_Framework_TestCase
         $this->isTrue();
     }
 
+    protected $fakeRawBodyNextUrl = '
+    {"meta": {"code": 200},
+     "data": {"bio": "profile...", "username": "asamingosu", "id": "1234567890", "website": "",
+      "counts": {"media": 72, "follows": 55, "followed_by": 78}, "profile_picture": "", "full_name": "imaiasami"},
+      "pagination": {"next_url":"http://next.com"}}';
+    protected $fakeDecodeBodyNextUrl = [
+        'meta'       => ['code' => 200],
+        'data'       => [
+            'bio'             => 'profile...',
+            'username'        => 'asamingosu',
+            'id'              => '1234567890',
+            'website'         => '',
+            'counts'          => [
+                'media'       => 72,
+                'follows'     => 55,
+                'followed_by' => 78
+            ],
+            'profile_picture' => '',
+            'full_name'       => 'imaiasami'
+        ],
+        'pagination' => [
+            'next_url' => 'http://next.com'
+        ]
+    ];
+
     protected $fakeRawBody = '
     {"meta": {"code": 200},
      "data": {"bio": "profile...", "username": "asamingosu", "id": "1234567890", "website": "",

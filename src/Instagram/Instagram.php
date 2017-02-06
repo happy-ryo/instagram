@@ -125,6 +125,17 @@ class Instagram
     }
 
     /**
+     * @param InstagramResponse $instagramResponse
+     * @return InstagramResponse
+     * @throws InstagramAPIException
+     */
+    public function next(InstagramResponse $instagramResponse)
+    {
+        $request = $this->createRequest('GET', $instagramResponse->getNextUrl());
+        return $this->lastResponse = $this->getClient()->sendRequest($request);
+    }
+
+    /**
      * @param string[] $scopes
      * @return string
      * @throws InstagramAPIException
