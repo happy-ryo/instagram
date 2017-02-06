@@ -20,11 +20,7 @@ class InstagramGuzzeleHttpClient implements InstagramHttpClientInterface
      */
     public function __construct(Client $guzzleClient = null)
     {
-        if ($this->guzzleClient === null) {
-            $this->guzzleClient = new Client();
-        } else {
-            $this->guzzleClient = $guzzleClient;
-        }
+            $this->guzzleClient = $guzzleClient ?: new Client();
     }
 
     /**
