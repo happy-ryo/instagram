@@ -23,7 +23,7 @@ Instagram API is a Instagram API call library.
 use \Munouni\Instagram\Instagram;
 $instagram = new Instagram([
     'client_id'     => 'YOUR_CLIENT_KEY',
-    'client_secret' => 'YOUR_CLIENT_CECRET',
+    'client_secret' => 'YOUR_CLIENT_SECRET',
     'redirect_uri'  => 'YOUR_APP_REDIRECT_URI'
 ]);
 
