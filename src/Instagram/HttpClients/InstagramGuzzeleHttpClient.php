@@ -34,10 +34,16 @@ class InstagramGuzzeleHttpClient implements InstagramHttpClientInterface
     public function send($url, $method, $params, $timeOut = 0)
     {
         $option = [
-            'query'           => $params,
             'timeout'         => $timeOut,
             'connect_timeout' => 10
         ];
+
+        if ($method === 'GET' || $method === 'DELETE') {
+            $option['query'] = $params;
+        } else if ($method === 'POST') {
+            $option['form_params'] = $params;
+        }
+
         $request = new Request($method, $url);
         try {
             $response = $this->guzzleClient->send($request, $option);
