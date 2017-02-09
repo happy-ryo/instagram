@@ -23,7 +23,7 @@ class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
         $this->instagramClient = new InstagramGuzzeleHttpClient($this->clientMock);
     }
 
-    public function testNormalRequest()
+    public function testNormalGETRequest()
     {
         $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
         $this->clientMock
@@ -32,6 +32,38 @@ class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
             ->andReturn($response);
 
         $instagramRawResponse = $this->instagramClient->send('http://test.com', 'GET', null);
+
+        $this->assertInstanceOf(InstagramRawResponse::class, $instagramRawResponse);
+        $this->assertEquals($this->fakeRawBody, $instagramRawResponse->getBody());
+        $this->assertEquals($this->fakeRawHeader, $instagramRawResponse->getHeaders());
+        $this->assertEquals(200, $instagramRawResponse->getStatusCode());
+    }
+
+    public function testNormalPOSTRequest()
+    {
+        $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
+        $this->clientMock
+            ->shouldReceive('send')
+            ->once()
+            ->andReturn($response);
+
+        $instagramRawResponse = $this->instagramClient->send('http://test.com', 'POST', null);
+
+        $this->assertInstanceOf(InstagramRawResponse::class, $instagramRawResponse);
+        $this->assertEquals($this->fakeRawBody, $instagramRawResponse->getBody());
+        $this->assertEquals($this->fakeRawHeader, $instagramRawResponse->getHeaders());
+        $this->assertEquals(200, $instagramRawResponse->getStatusCode());
+    }
+
+    public function testNormalDELETERequest()
+    {
+        $response = new Response(200, $this->fakeHeadersAsArray, $this->fakeRawBody);
+        $this->clientMock
+            ->shouldReceive('send')
+            ->once()
+            ->andReturn($response);
+
+        $instagramRawResponse = $this->instagramClient->send('http://test.com', 'DELETE', null);
 
         $this->assertInstanceOf(InstagramRawResponse::class, $instagramRawResponse);
         $this->assertEquals($this->fakeRawBody, $instagramRawResponse->getBody());
