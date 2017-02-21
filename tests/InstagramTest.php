@@ -178,4 +178,13 @@ class InstagramTest extends PHPUnit_Framework_TestCase
         $instagramResponse = $instagram->next($nextRequestMock);
         $this->assertEquals($instagramResponse, $instagram->getLastResponse());
     }
+
+    public function testNextUrl()
+    {
+        $instagram = new Instagram(['access_token' => 'chihaya']);
+        $instagram->setClient(new InstagramClient(new Munouni\Instagram\Tests\HttpClients\InstagramTestHttpClients()));
+
+        $instagramResponse = $instagram->nextUrl('http://test.com/next');
+        $this->assertEquals($instagramResponse, $instagram->getLastResponse());
+    }
 }
