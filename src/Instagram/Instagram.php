@@ -131,7 +131,17 @@ class Instagram
      */
     public function next(InstagramResponse $instagramResponse)
     {
-        $request = $this->createRequest('GET', $instagramResponse->getNextUrl());
+        return $this->nextUrl($instagramResponse->getNextUrl());
+    }
+
+    /**
+     * @param string $nextUrl
+     * @return InstagramResponse
+     * @throws InstagramAPIException
+     */
+    public function nextUrl($nextUrl)
+    {
+        $request = $this->createRequest('GET', $nextUrl);
         return $this->lastResponse = $this->getClient()->sendRequest($request);
     }
 
