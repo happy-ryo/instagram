@@ -12,15 +12,15 @@ class InstagramResponse
      */
     private $instagramRequest;
     /**
-     * @var string
+     * @var string|null
      */
     private $body;
     /**
-     * @var int
+     * @var int|null
      */
     private $httpStatusCode;
     /**
-     * @var string
+     * @var array|null
      */
     private $header;
 
@@ -32,9 +32,9 @@ class InstagramResponse
     /**
      * InstagramResponse constructor.
      * @param InstagramRequestInterface $instagramRequest
-     * @param null $body
-     * @param null $httpStatusCode
-     * @param string $header
+     * @param string|null $body
+     * @param int|null $httpStatusCode
+     * @param array|null $header
      */
     public function __construct(InstagramRequestInterface $instagramRequest, $body = null, $httpStatusCode = null, $header = null)
     {
@@ -60,7 +60,7 @@ class InstagramResponse
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getHttpStatusCode()
     {
@@ -76,7 +76,7 @@ class InstagramResponse
     }
 
     /**
-     * @return string
+     * @return array|null
      */
     public function getHeader()
     {
@@ -110,5 +110,37 @@ class InstagramResponse
             }
         }
         throw new InstagramAPIException('Next url not found.');
+    }
+
+    /**
+     * @return int
+     * @throws InstagramAPIException
+     */
+    public function getRateLimit()
+    {
+        if ($this->getHeader() !== null && array_key_exists('x-ratelimit-limit', $this->getHeader())) {
+            return (int)$this->getHeader()['x-ratelimit-limit'][0];
+        }
+        throw new InstagramAPIException('x-ratelimit-limit not found.');
+    }
+
+    /**
+     * @return int
+     * @throws InstagramAPIException
+     */
+    public function getRateLimitRemaining()
+    {
+        if ($this->getHeader() !== null && array_key_exists('x-ratelimit-remaining', $this->getHeader())) {
+            return (int)$this->getHeader()['x-ratelimit-remaining'][0];
+        }
+        throw new InstagramAPIException('x-ratelimit-remaining not found.');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExistRateLimit()
+    {
+        return $this->getHeader() !== null && array_key_exists('x-ratelimit-limit', $this->getHeader());
     }
 }

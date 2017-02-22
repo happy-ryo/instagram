@@ -35,7 +35,7 @@ class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
 
         $this->assertInstanceOf(InstagramRawResponse::class, $instagramRawResponse);
         $this->assertEquals($this->fakeRawBody, $instagramRawResponse->getBody());
-        $this->assertEquals($this->fakeRawHeader, $instagramRawResponse->getHeaders());
+        $this->assertEquals($this->fakeHeadersAsArray, $instagramRawResponse->getHeaders());
         $this->assertEquals(200, $instagramRawResponse->getStatusCode());
     }
 
@@ -51,7 +51,7 @@ class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
 
         $this->assertInstanceOf(InstagramRawResponse::class, $instagramRawResponse);
         $this->assertEquals($this->fakeRawBody, $instagramRawResponse->getBody());
-        $this->assertEquals($this->fakeRawHeader, $instagramRawResponse->getHeaders());
+        $this->assertEquals($this->fakeHeadersAsArray, $instagramRawResponse->getHeaders());
         $this->assertEquals(200, $instagramRawResponse->getStatusCode());
     }
 
@@ -67,7 +67,7 @@ class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
 
         $this->assertInstanceOf(InstagramRawResponse::class, $instagramRawResponse);
         $this->assertEquals($this->fakeRawBody, $instagramRawResponse->getBody());
-        $this->assertEquals($this->fakeRawHeader, $instagramRawResponse->getHeaders());
+        $this->assertEquals($this->fakeHeadersAsArray, $instagramRawResponse->getHeaders());
         $this->assertEquals(200, $instagramRawResponse->getStatusCode());
     }
 
@@ -97,12 +97,5 @@ class InstagramGuzzeleTestHttpClient extends AbstractTestHttpClient
             ->andThrow(new RequestException('kku...', $request));
 
         $this->instagramClient->send('http://test.com', 'GET', null);
-    }
-
-    public function testGetHeadersAsString()
-    {
-        $response = new Response(200, $this->fakeHeadersAsArray);
-        $headers = $this->instagramClient->getHeadersAsString($response);
-        $this->assertEquals($this->fakeRawHeader, $headers);
     }
 }

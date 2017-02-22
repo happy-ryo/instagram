@@ -8,7 +8,6 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Munouni\Instagram\Exception\InstagramAPIException;
 use Munouni\Instagram\Http\InstagramRawResponse;
-use Psr\Http\Message\ResponseInterface;
 
 class InstagramGuzzeleHttpClient implements InstagramHttpClientInterface
 {
@@ -53,23 +52,8 @@ class InstagramGuzzeleHttpClient implements InstagramHttpClientInterface
             throw new InstagramAPIException($requestException->getMessage(), $requestException->getCode());
         }
 
-        $rawHeaders = $this->getHeadersAsString($response);
         $rawBody = $response->getBody();
         $statusCode = $response->getStatusCode();
-        return new InstagramRawResponse($rawHeaders, $rawBody, $statusCode);
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @return string
-     */
-    public function getHeadersAsString(ResponseInterface $response)
-    {
-        $headers = $response->getHeaders();
-        $tmpHeaders = [];
-        foreach ($headers as $header => $value) {
-            $tmpHeaders[] = $header . ':' . implode(', ', $value);
-        }
-        return implode("\n", $tmpHeaders);
+        return new InstagramRawResponse($response->getHeaders(), $rawBody, $statusCode);
     }
 }

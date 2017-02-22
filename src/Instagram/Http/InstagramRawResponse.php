@@ -10,7 +10,7 @@ class InstagramRawResponse
 
     /**
      * InstagramRawResponse constructor.
-     * @param string $headers
+     * @param array $headers
      * @param string $body
      * @param int $statusCode
      */
@@ -22,7 +22,7 @@ class InstagramRawResponse
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getHeaders()
     {
